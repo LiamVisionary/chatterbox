@@ -540,7 +540,7 @@ class T3(nn.Module):
             output_logits = outputs[1]
             if len(outputs) == 3:
                 generated_ids = outputs[2].clone()
-            output_logits = output_logits.clone()
+            output_logits = output_logits.logits.clone() if hasattr(output_logits, "logits") else output_logits.clone()
 
             if i == max_new_tokens // stride_length - 1:
                 if benchmark_t3:
@@ -684,7 +684,7 @@ def generate_t3_tokens_strided(
             # max_position=max_position, # only use for cudagraphs-manual
             alignment_stream_analyzer=alignment_stream_analyzer
         )
-        output_logits = output_logits.clone()
+        output_logits = output_logits.logits.clone() if hasattr(output_logits, "logits") else output_logits.clone()
     return next_token, output_logits
     
 
