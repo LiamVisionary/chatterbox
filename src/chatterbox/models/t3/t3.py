@@ -567,7 +567,7 @@ def _initial_forward_pass(
         past_key_values=kv_cache,
         cache_position=cache_position,
     )
-    output_logits = output_logits[:, -1:, :] # Normalize shape for loop
+    output_logits = output_logits.logits[:, -1:, :] # Normalize shape for loop
     return output_logits
 
 _initial_forward_pass_variants = {
